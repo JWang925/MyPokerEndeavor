@@ -1,1 +1,9 @@
-blahblah
+To do list:
+
+Review and revamp the data structure.
+
+Test for seven card poker comparisons.
+
+Add random constructor for PokerHand.
+
+Add class Card, and add constructor for PokerHand from array of Cards.
