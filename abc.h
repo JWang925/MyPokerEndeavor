@@ -1,9 +1,12 @@
+#pragma once
 #include <vector>
 
 class PokerHand {
 public:
   int handmap[5][15]= { {0}};
   PokerHand (const char* pokerhand) ; //constructor from char input
+  PokerHand (const int ); //constructor by defining number of random cards
+  ~PokerHand (); //destructor
 };
 
 
