@@ -5,6 +5,7 @@
 #include<ctime>
 #include<cstdlib>
 #include"card.h"
+#include"deck.h"
 
 using namespace std;
 
@@ -12,15 +13,28 @@ using namespace std;
 void test1();
 void test2();
 void test3();
+void test4();
 
 int main(){
 	test1();
 	test2();
 	test3();
+	test4();
 	return 0;
 }
 
-void test3(){
+
+void test4(){
+	Deck deck;
+	std::cout << "deck before shuffling:" << std::endl; 
+	deck.print();
+	deck.shuffle();
+	std::cout << "deck after shuffling:" << std::endl;
+	deck.print();
+}
+
+
+void test3(){ //basic test on generate and output a card
 	Card card(1,2);
 	cout << card <<endl;
 

@@ -21,7 +21,7 @@ PokerHand::PokerHand (const int ncard){ //constructor by defining number of rand
 	}
 }
 
-PokerHand::PokerHand (const char* pokerhand) {
+PokerHand::PokerHand (const char* pokerhand) { //constructor from a string input such as "KH KD TC 3C"
   	int i,j;
    	while (*pokerhand != '\0'){
         if( (*pokerhand)==' ') {pokerhand++; continue;}
