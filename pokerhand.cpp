@@ -1,12 +1,6 @@
 
 #include "pokerhand.h"
 
-std::ostream& operator<<(std::ostream& outstream, Result R){
-    if(R==Result::Win) outstream << "Win" << std::endl;
-    if(R==Result::Loss) outstream << "Loss" <<std::endl;
-    if(R==Result::Tie) outstream << "Tie" <<std::endl;
-}
-
 PokerHand::PokerHand (const int ncard){ //constructor by defining number of random cards, generate a random hand. For example, PokerHand hand1(7);
 	int icard=0;
 	while(icard<ncard){
@@ -64,218 +58,160 @@ PokerHand::~PokerHand(){}
 
 
 
+void PokerHand::print(){
+	for (int i=0; i<=4; i++){
+		for (int j=0; j<=14; j++)
+			std::cout << handmap[i][j] << ' ';
+		std::cout<<std::endl;
+	}
 
-Result compare (const PokerHand &player, const PokerHand &opponent) {
-//	for(int j=0; j<5; j++){
-//  	    for(int i=0; i<15; i++)
-//        std::cout<<player.handmap[j][i];
-//        std::cout<<std::endl;
-//    }
-//    std::cout<<std::endl;
-//    for(int j=0; j<5; j++){
-//  	    for(int i=0; i<15; i++)
-//    	    std::cout<<opponent.handmap[j][i];
-//            std::cout<<std::endl;
-//    }
-  
-    std::vector<int>  kickerA(6),kickerB(6);
-    while(1){
-        if (_is_SF(player.handmap, kickerA)) { 
-//			std::cout<<"SF" <<std::endl; 
-			kickerA[0]=8;break;}
-        if (_is_quad(player.handmap, kickerA)) { 
-//			std::cout<<"quad" <<std::endl;
-			kickerA[0]=7;break;}
-        if (_is_FH(player.handmap, kickerA)) {
-//			std::cout<<"FH"<<std::endl; 
-			kickerA[0]=6;break;}
-        if (_is_flush(player.handmap, kickerA)) {
-//			std::cout<<"flush" << std::endl; 
-			kickerA[0]=5;break;}
-        if (_is_straight(player.handmap, kickerA)) {
-//			std::cout<<"straight" << std::endl;
-			kickerA[0]=4;break;}
-        if (_is_three_of_a_kind(player.handmap, kickerA)) {
-//			std::cout<<"3ofakind" <<std::endl;
-			kickerA[0]=3;break;}
-        if (_is_two_pairs(player.handmap, kickerA)) {
-//			std::cout<<"2pairs" <<std::endl; 
-			kickerA[0]=2;break;}
-        if (_is_one_pair(player.handmap, kickerA)) {
-//			std::cout<<"1pair" <<std::endl; 
-			kickerA[0]=1;break;}
-        _high_cards(player.handmap,kickerA); 
-//		std::cout<<"high card"<<std::endl;
-		break;
-    }
-//    std::cout<< "B:";
-    while(1){
-        if (_is_SF(opponent.handmap, kickerB)) {
-//			std::cout<<"SF" <<std::endl; 
-			kickerB[0]=8;break;}
-        if (_is_quad(opponent.handmap, kickerB)) { 
-//			std::cout<<"quad" <<std::endl;
-			kickerB[0]=7;break;}
-        if (_is_FH(opponent.handmap, kickerB)) {
-//			std::cout<<"FH"<<std::endl; 
-			kickerB[0]=6;break;}
-        if (_is_flush(opponent.handmap, kickerB)) {
-//			std::cout<<"flush" << std::endl;
-			kickerB[0]=5;break;}
-        if (_is_straight(opponent.handmap, kickerB)) {
-//			std::cout<<"straight" << std::endl;
-			kickerB[0]=4;break;}
-        if (_is_three_of_a_kind(opponent.handmap, kickerB)) {
-//			std::cout<<"3ofakind" <<std::endl; 
-			kickerB[0]=3;break;}
-        if (_is_two_pairs(opponent.handmap, kickerB)) {
-//			std::cout<<"2pairs" <<std::endl;
-			kickerB[0]=2;break;}
-        if (_is_one_pair(opponent.handmap, kickerB)) {
-//			std::cout<<"1pair" <<std::endl;
-			kickerB[0]=1;break;}
-        _high_cards(opponent.handmap,kickerB); 
-//		std::cout<<"high card"<<std::endl;
-		break;
-    }
-    return compareV(kickerA,kickerB);
+
+
 }
 
-Result compareV(const std::vector<int> & kickerA, const std::vector<int> & kickerB){
-	auto pl=kickerA.begin();
-    auto op=kickerB.begin();
-    while(pl!=kickerA.end()){
-  	    if((*pl)>(*op)) return Result::Win;
-  	    if((*pl)<(*op)) return Result::Loss;
-  	    pl++;op++;
-    }
-    return Result::Tie;
-}
 
-bool _is_SF(const int handmap[][15], std::vector<int> &Kicker){
-	for(int suit=1; suit<=4; suit++){ 
-		if(handmap[suit][0]<5) continue; //go check for next suit
-		for(int rank=1; rank<=10; rank++){ //check rank
-    	    if(handmap[suit][rank]==1 && handmap[suit][rank+1]==1 &&handmap[suit][rank+2]==1 &&handmap[suit][rank+3]==1 && handmap[suit][rank+4]==1){
-      	    Kicker[1]=rank+4;
-            return 1;
-    	    }
-        }
-    }
-  return 0;
-}
-
-bool _is_flush(const int handmap[][15], std::vector<int> &Kicker){
-	int suit;
-    auto it=Kicker.begin();
-    it++;
-	for(suit=1; suit<=4; suit++)
-		if(handmap[suit][0]>=5) break;
-	if (suit==5) { return 0;} //return when no flush is found
-    for (int High_card=14; High_card>=2; High_card--){
-  	    if(handmap[suit][High_card]==1 && it!=Kicker.end()){
-    	    (*it) =High_card;
-            it++;
-        }
-    }
-    return 1;
-}
-
-bool _is_straight(const int handmap[][15], std::vector<int> &Kicker){
-	for(int rank=1; rank<=10; rank++){
-		if(handmap[0][rank] != 0 && handmap[0][rank+1] != 0 && handmap[0][rank+2] != 0 && handmap[0][rank+3] !=0 && handmap[0][rank+4] !=0){
-    	    Kicker[1]=rank+4;
-            return 1;
+bool PokerHand::_is_SF(std::vector<int> &Kicker){  
+	for(int suit=1; suit<=4; suit++){ //go through the suits one-by-one
+		if(handmap[suit][0]<5) continue; //if there is less than 5 cards for a suit, skip this suit
+		for(int rank=10; rank>=1; rank--){ //if more than 5 cards for a suit, check downwards from T for a SF
+			if(handmap[suit][rank]==1 && handmap[suit][rank+1]==1 &&handmap[suit][rank+2]==1 &&handmap[suit][rank+3]==1 && handmap[suit][rank+4]==1){
+				Kicker[1]=rank+4;
+				Kicker[0]=8; //8 for SF
+				return 1;
+			}
 		}
-    }
-	return 0;
-}
-
-bool _is_quad(const int handmap[][15], std::vector<int> &Kicker){
-	for(int rank=2; rank<=14; rank++){
-  	    if(handmap[0][rank]==4) {
-  		    Kicker[1]=rank;
-            for(int rank2=14; rank2>1; rank2--)
-      	        if(handmap[0][rank2]!=0) Kicker[2]=rank2;
-    	        return 1;
-        }
-    } 
- 	return 0;
-}
-
-bool _is_FH(const int handmap[][15], std::vector<int> &Kicker){
-	for(int rank=14; rank>=2; rank--){
-		if(handmap[0][rank]==3) {
-			Kicker[1]=rank;
-  		    for(int rank2=14; rank2>=2; rank2--){
-  			    if(rank2==Kicker[1]) continue;	
-				if(handmap[0][rank2]>=2) {
-    			    Kicker[2]=rank2;
-      		        return 1;
-    		    }   
-  	        }
-        }
 	}
 	return 0;
 }
 
-bool _is_three_of_a_kind(const int handmap[][15], std::vector<int> &Kicker){
+
+bool PokerHand::_is_quad(std::vector<int> &Kicker){ //this is very straight too; check downwards from Ace for Quads
+	for(int rank=14; rank>1; rank--){
+		if(handmap[0][rank]==4){
+			Kicker[1]=rank;
+			for(int rank2=14; rank2>1; rank2--) //rank2 is an "iterator" scanning for the Kicker
+      	        		if(handmap[0][rank2]!=0 && rank2!=Kicker[1]){
+					Kicker[2]=rank2;
+					break;
+				}
+			Kicker[0]=7; //7 for Quad
+    	        	return 1;
+		}
+	} 
+ 	return 0;
+}
+
+bool PokerHand::_is_FH(std::vector<int> &Kicker){ //check for trips and then check for pair
+	for(int rank=14; rank>1; rank--){
+		if(handmap[0][rank]==3) {
+			Kicker[1]=rank;
+			for(int rank2=14; rank2>=2; rank2--){ //then look for the pair
+				if(rank2==Kicker[1]) continue;	//well we have to skip the rank which has the trip
+				if(handmap[0][rank2]>=2) {
+					Kicker[2]=rank2;
+					Kicker[0]=6; //6 for FH
+					return 1;
+				}   
+			}
+		}
+	}
+	return 0;
+}
+
+
+bool PokerHand::_is_flush(std::vector<int> &Kicker){
+	int suit;
 	auto it=Kicker.begin();
-    it++;
-    for(int rank=14; rank>=2; rank--){ //find the three_of_a_kind
-  	    if(handmap[0][rank]==3) {
-  		    (*it)=rank;it++;
-  		    for(int rank2=14; rank2>=2; rank2--){ //collect the kickers
-  			    if(handmap[0][rank2]==1 && it!=Kicker.end()) {(*it)=rank2; it++;}
-  		    }
-        return 1;
-  	    }
-    }
+	it++;
+	for(suit=1; suit<=4; suit++) //go through the suits and look if the suit has 5 cards, if so, go ahead and assume it is not possible to have 2 Flushes in a hand. (need to check that the pokerhand size <10)
+		if(handmap[suit][0]>=5) break;
+	if (suit==5) { return 0;} //return 0 when no flush is found
+	for (int High_card=14; High_card>=2; High_card--){ //now we have high cards, count downwards
+		if(handmap[suit][High_card]==1 && it!=Kicker.end()){ //stop when the vector <Kicker> is fully filled
+			(*it) =High_card;
+			it++;
+		}
+	}
+	Kicker[0]=5; //5 for Flush
+	return 1;
+}
+
+
+bool PokerHand::_is_straight(std::vector<int> &Kicker){ //this is straight forward: check the numbers
+	for(int rank=1; rank<=10; rank++){
+		if(handmap[0][rank] != 0 && handmap[0][rank+1] != 0 && handmap[0][rank+2] != 0 && handmap[0][rank+3] !=0 && handmap[0][rank+4] !=0){
+			Kicker[1]=rank+4;
+			Kicker[0]=4; //4 for straight
+			return 1;
+		}
+	}
+	return 0;
+}
+
+
+bool PokerHand::_is_three_of_a_kind(std::vector<int> &Kicker){ //check for trips
+	auto it=Kicker.begin();
+	it++;
+	for(int rank=14; rank>=2; rank--){ //find the three_of_a_kind
+		if(handmap[0][rank]==3) {
+			(*it)=rank;it++;
+			for(int rank2=14; rank2>1; rank2--){ //collect the kickers
+				if(handmap[0][rank2]==1 && rank2!=rank && it!=Kicker.end()) {(*it)=rank2; it++;}
+			}
+		Kicker[0]=3; //3 for trip
+		return 1;
+		}
+	}
+	return 0;
+}
+
+bool PokerHand::_is_two_pairs(std::vector<int> &Kicker){
+	auto it=Kicker.begin();
+	it++;
+	for(int rank=14; rank>=2; rank--){ //find 2 pairs.
+		if(handmap[0][rank]==2) { //find first pair
+			(*it)=rank;it++;
+			for(int rank2=rank-1; rank2>=2; rank2--){
+				if(handmap[0][rank2]==2){//find second pair
+					(*it)=rank; it++;
+					for(int rank3=14; rank3>=2; rank3--){ //find the kicker
+						if(handmap[0][rank3]>0 && rank3 !=rank2 && rank3!=rank){
+							(*it)=rank3;
+							Kicker[0]=2; //2 for two pairs 
+							return 1;
+						}
+					} 
+				}
+			}
+		}
+	}
     return 0;
 }
 
-bool _is_two_pairs(const int handmap[][15], std::vector<int> &Kicker){
+bool PokerHand::_is_one_pair(std::vector<int> &Kicker){
 	auto it=Kicker.begin();
-    it++;
-    for(int rank=14; rank>=2; rank--){ //find 2 pairs.
+	it++;
+	for(int rank=14; rank>=2; rank--){ //Starting from Ace(14), looking for a pair one-by-one downwards
 		if(handmap[0][rank]==2) { //found first pair
-    	    (*it)=rank;it++;
-    	    for(int rank2=rank-1; rank2>=2; rank2--){
-      	        if(handmap[0][rank2]==2){//found second pair
-      		        (*it)=rank; it++;
-                    for(int rank3=14; rank3>=2; rank3--){ //find the kicker
-          	            if(handmap[0][rank3]==1){
-            	            (*it)=rank3; return 1;
-                        }
-                    } 
-                }
-            }
-        }
-    }
-    return 0;
+			(*it)=rank;it++; //document it!
+			for(int rank2=14; rank2>=2; rank2--){ //now start to record the kickers, again downward from Ace (14).
+				if(handmap[0][rank2]==1 && it!=Kicker.end()){
+					(*it)=rank2; it++; 
+				}
+			}
+		Kicker[0]=1; //1 for one pair;
+		return 1;
+		}
+	}
+	return 0;
 }
 
-bool _is_one_pair(const int handmap[][15], std::vector<int> &Kicker){
+void PokerHand::_high_cards(std::vector<int> &Kicker){
 	auto it=Kicker.begin();
-    it++;
-    for(int rank=14; rank>=2; rank--){
-		if(handmap[0][rank]==2) { //found first pair
-    	    (*it)=rank;it++;
-            for(int rank2=14; rank2>=2; rank2--){
-      	        if(handmap[0][rank2]==1 && it!=Kicker.end()){
-        	        (*it)=rank2; it++; 
-                }
-            }
-            return 1;
-        }
-    }
-    return 0;
+	it++;
+	for(int rank=14; rank>=2; rank--){
+		if(handmap[0][rank]==1 && it!=Kicker.end()) {  (*it)=rank;it++; }
+	}
 }
 
-void _high_cards(const int handmap[][15], std::vector<int> &Kicker){
-	auto it=Kicker.begin();
-    it++;
-    for(int rank=14; rank>=2; rank--){
-    	if(handmap[0][rank]==1 && it!=Kicker.end()) {  (*it)=rank;it++; }
-    }
-}
+

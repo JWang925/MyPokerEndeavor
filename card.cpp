@@ -1,22 +1,27 @@
 #include "card.h"
 
-Card::Card() {
-	_suit=0;
-	_rank=0;
+Card::Card() { //default constructor, generate a random card
+	_suit=std::rand()%4+1;
+	_rank=std::rand()%13+1;
 }
 
-Card::Card(int rank,int suit){
+Card::Card(int rank,int suit){ //constructor by number
 	_suit=suit;
 	_rank=rank;
 }
 
+Card::Card(const Card & c){ //Copy constructor 
+	_suit=c.GetSuit();
+	_rank=c.GetRank();
+}
+
 Card::~Card(){}
 
-int Card::GetSuit(){
+int Card::GetSuit() const {
 	return _suit;
 }
 
-int Card::GetRank(){
+int Card::GetRank() const {
 	return _rank;
 }
 

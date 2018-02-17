@@ -20,7 +20,11 @@ void Deck::print(){
 	std::cout << std::endl;
 }
 
-
+Card Deck::deal(){
+	Card temp=thedeck.back();
+	thedeck.erase(thedeck.end()); //remove the end of the card.
+	return temp;
+}
 
 void Deck::shuffle(){
 	std::random_shuffle (thedeck.begin(), thedeck.end());
