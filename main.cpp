@@ -9,15 +9,12 @@
 
 using namespace std;
 
-
-void test3();
 void test4();
 void test5();
 void test6();
 
 int main(){
 	std::srand(std::time(0));
-	test3();
 	test4();
 	test5();
 	test6();
@@ -25,13 +22,8 @@ int main(){
 }
 
 
-void test3(){ //basic test on generate and output a card
-	Card card(1,2);
-	cout << card <<endl;
-
-}
-
 void test4(){ //test of deck generation, shuffle and deal.
+	cout << "*****Test4: Deck generation and shuffling*****" <<endl;
 	Deck deck;
 	std::cout << "deck before shuffling:" << std::endl; 
 	deck.print();
@@ -44,6 +36,7 @@ void test4(){ //test of deck generation, shuffle and deal.
 }
 
 void test5(){ //generate and print PokerHand
+	cout << "*****Test5: PokerHand generation and display*****" <<endl;
 	PokerHand hand1("2H 3H 4H 5H 6D 7H 8H");
 	std::cout << "Hand: \"2H 3H 4H 5H 6D 7H 8H\"" <<std::endl;
 	hand1.print();
@@ -53,7 +46,8 @@ void test5(){ //generate and print PokerHand
 }
 
 void test6(){ //poker hand type evaluation benchmark
-	long ihand=0;
+	cout << "*****Test6: Hand Frequency calculator and benchmark*****" <<endl;
+	long ihand=0; 
 	long nhand=10000000;
 	vector<long> count{0,0,0,0,0,0,0,0,0};
 

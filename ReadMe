@@ -1,3 +1,43 @@
 To do list:
 
 Object game;
+
+
+
+
+
+Sample outputs of tests:
+*****Test4: Deck generation and shuffling*****
+deck before shuffling:
+As 2s 3s 4s 5s 6s 7s 8s 9s Ts Js Qs Ks Ah 2h 3h 4h 5h 6h 7h 8h 9h Th Jh Qh Kh Ac 2c 3c 4c 5c 6c 7c 8c 9c Tc Jc Qc Kc Ad 2d 3d 4d 5d 6d 7d 8d 9d Td Jd Qd Kd 
+deck after shuffling:
+2s 2h Jh Jd As 3c 4d Qs Ad 4c Jc Ah 8s 5d 6d 8h 9h 5h Td 3h 4s 5c Kc Ks 7d Tc 9s 9d 4h Qh 8d 3d 7c 9c 2c Kh Qd 2d 8c 3s 6s 6h 7s 5s Ac Js Qc 7h Th Ts Kd 6c 
+dealing a card:
+Card being dealt is: 6c
+2s 2h Jh Jd As 3c 4d Qs Ad 4c Jc Ah 8s 5d 6d 8h 9h 5h Td 3h 4s 5c Kc Ks 7d Tc 9s 9d 4h Qh 8d 3d 7c 9c 2c Kh Qd 2d 8c 3s 6s 6h 7s 5s Ac Js Qc 7h Th Ts Kd 
+*****Test5: PokerHand generation and display*****
+Hand: "2H 3H 4H 5H 6D 7H 8H"
+0 0 1 1 1 1 1 1 1 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+6 0 1 1 1 1 0 1 1 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 
+Hand: "KS AS TS QS JD 9S 8S"
+0 1 0 0 0 0 0 0 1 1 1 1 1 1 1 
+6 1 0 0 0 0 0 0 1 1 1 0 1 1 1 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 
+*****Test6: Hand Frequency calculator and benchmark*****
+10000000 hand evaluation done in 5.77526 seconds
+Frequency table:
+SF (Expected: 0.0311%):      0.0003135
+quad (Expected: 0.168%):     0.0016817
+FH (Expected: 2.60%):        0.0258967
+flush (Expected: 3.03%):     0.0302513
+straight (Expected: 4.62%):  0.0462065
+trip (Expected: 4.83%):      0.0483729
+two-pair (Expected: 23.5%):  0.235095
+pair (Expected: 43.8%):      0.438241
+high-card(Expected: 17.4%):  0.173941
+
