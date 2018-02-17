@@ -1,11 +1,3 @@
 To do list:
 
-Review and revamp the data structure.
-
-Test for seven card poker comparisons. Continue testing.
-
-Add class Card, and add constructor for PokerHand from array of Cards.
-
-Add subfunction, print handmap to class "PokerHand".
-Add function, hand_strength to class "PokerHand".
-Modify function, compare, to get rid of the handmap and hand strength output.
+Object game;
