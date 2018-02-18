@@ -1,5 +1,5 @@
-CFLAGS = -O -std=c++11
-CC = g++   
+CFLAGS = -O1 -std=c++11
+CC = g++
 
 all: RunMe
 

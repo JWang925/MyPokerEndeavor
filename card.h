@@ -12,9 +12,16 @@ public:
 	int GetSuit() const;
 	int GetRank() const;
 
+	void SetType(int); //0=uninitialized; 1=private card; 2=board;
+	int GetType() const;
+
+	bool operator==(const Card &c) const{  //defines == operator for class Card
+		return ( c.GetSuit()== _suit && c.GetRank()== _rank); // return true if the suit and rank matches
+	}
+
 private:
 	int  _rank, _suit;
-
+	int _type=0; //0=uninitialized; 1=private card; 2=board;
 };
 
 std::ostream& operator<<(std::ostream& outstream, Card c); //output overload

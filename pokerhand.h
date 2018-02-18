@@ -15,23 +15,32 @@ public:
 
 	~PokerHand (); //destructor
 
-	//void add (const Card & ); //add a card to the card map
+	void add (const Card & ); //add a card to the card map
 	
 	void print();
+	void printarray();
 
+	//std::vector<Card> GetMadeHand(); //return a 5-card list which is the final made hand
 
+	std::vector<int> GetStrength();
 	//check if hand is SF, return a vector of length 6 signifying [hand type,kicker1,kicker2,kicker3,kicker4,kicker5]
 	//strength 8=SF; 7=Quad; 6=Full House; 5=Flush 4=Straight 3=trip 2=twopairs 1=onepair 0=highcard
-	bool _is_SF(std::vector<int> &); 
-	bool _is_quad(std::vector<int>&); 
-	bool _is_FH(std::vector<int> &);
-	bool _is_flush(std::vector<int>&);
-	bool _is_straight(std::vector<int>&);
-	bool _is_three_of_a_kind(std::vector<int> &);
-	bool _is_two_pairs(std::vector<int> &);
-	bool _is_one_pair(std::vector<int> &);
-	void _high_cards(std::vector<int> &);
+
+	std::vector<Card> GetWinnerHand(); //only working for Strength=8 and Strength 7; must be run after Strength is computed.
+	bool ifWinnerHandContainsHoleCards(); //check if the Winner Hand contains the private cards
+
+	bool _is_SF(); 
+	bool _is_quad(); 
+	bool _is_FH();
+	bool _is_flush();
+	bool _is_straight();
+	bool _is_three_of_a_kind();
+	bool _is_two_pairs();
+	bool _is_one_pair();
+	void _high_cards();
 
 private:
-	int handmap[5][15]= {{0}}; //an 2D array initialized to zero,  leave it to public to speed up computational time (? need to check)
+	int handmap[5][15]= {{0}}; //an 2D array initialized to zero which is used to do hand strength computation
+	std::vector <Card> hand; // a vector of cards contained
+	std::vector <int> strength={0,0,0,0,0,0}; //a vector indicating the show-down value of the hand
 };

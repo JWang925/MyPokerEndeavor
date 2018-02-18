@@ -13,6 +13,7 @@ Card::Card(int rank,int suit){ //constructor by number
 Card::Card(const Card & c){ //Copy constructor 
 	_suit=c.GetSuit();
 	_rank=c.GetRank();
+	_type=c.GetType();
 }
 
 Card::~Card(){}
@@ -24,6 +25,17 @@ int Card::GetSuit() const {
 int Card::GetRank() const {
 	return _rank;
 }
+
+int Card::GetType() const{
+	return _type;
+}
+
+
+void Card::SetType(int type){
+	_type=type;
+}
+
+
 
 std::ostream& operator<<(std::ostream& outstream, Card c){
 
@@ -41,6 +53,7 @@ switch(c.GetRank()){
        		case 11 : outstream<<"J"; break;
        		case 12 : outstream<<"Q"; break;
 		case 13 : outstream<<"K"; break;
+		case 14 : outstream<<"A"; break;
        		default : std::cout<< "Rank out of bound!" << std::endl;
 }
 	
